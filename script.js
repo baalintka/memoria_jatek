@@ -1,55 +1,59 @@
-const lista=['kepek/kep1.jpg','kepek/kep2.jpg','kepek/kep3.jpg','kepek/kep4.jpg','kepek/kep5.jpg','kepek/kep6.jpg'];
-let db=0;
-const KIVALASZTOTTEKEPEK=[]
+const lista = ['kepek/kep1.jpg','kepek/kep2.jpg','kepek/kep3.jpg','kepek/kep4.jpg','kepek/kep5.jpg','kepek/kep6.jpg'];
+const KIVALASZTOTTKEPEK = []
+let db = 0;
 $(function(){
+    console.log("barmi");
+    const felsoSection = $(`#felso`);
+    let tartalom = osszeAllit();
+    felsoSection.append(tartalom);
+    const FELSOKEPEK = $("#felso img");
+    FELSOKEPEK.on("click", kepreKattintas);
     
-   const FELSOELEM=$(`#felso`);
-   
-   osszeAllit();
-    let tartalom=osszeAllit();
-    FELSOELEM.append(tartalom);
-    const FELSOKEPEK=$("#felso img");
-    FELSOKEPEK.on("click",keprekattintas);
-
-});
-
-function keprekattintas(event){
-    const aktKep=event.target;
+})
+function kepreKattintas(event){
+    const aktKep = event.target;
     console.log(aktKep.id);
     console.log($(aktKep).attr("id"));
-
-    aktKep.src=lista[aktKep.id]
-    KIVALASZTOTTEKEPEK.push($(aktKep).attr("id"));
+    aktKep.src = lista[aktKep.id]; 
+    KIVALASZTOTTKEPEK.push($(aktKep).attr("id"));
     db++;
-    if(db==2){
+    if(db==2) {
         db=0;
-        visszafordit()
+        visszaFordit()
         
     }
+}   
+function visszaFordit(){
+    console.log(KIVALASZTOTTKEPEK);
+    
+    
+ setTimeout(function() {
+    const FELSOKEPEK = $("#felso img");
+    let aktKep = FELSOKEPEK.eq(KIVALASZTOTTKEPEK[0]);
+    $(aktKep).attr("src","kepek/hatter.jpg");
+    aktKep = FELSOKEPEK.eq(KIVALASZTOTTKEPEK[1]);
+    $(aktKep).attr("src","kepek/hatter.jpg");
+    KIVALASZTOTTKEPEK.pop();
+    KIVALASZTOTTKEPEK.pop();
+
+}, 1000);
+    
+    
+
+       
 }
 
-function visszafordit(){
-    console.log(KIVALASZTOTTEKEPEK)
-    setTimeout(function(){
-        const FELSOKEPEK=$("felso img");
-        let aktKep= FELSOKEPEK.eq(KIVALASZTOTTEKEPEK[0])
-        console.log(aktKep);
-        $(aktKep).attr("src","kepek/hatter.jpg")
-        aktKep= FELSOKEPEK.eq(KIVALASZTOTTEKEPEK[1])
-        $(aktKep).attr("src","kepek/hatter.jpg");
-        KIVALASZTOTTEKEPEK.pop();
-        KIVALASZTOTTEKEPEK.pop();
-    },1000);
-}
+
+
 
 function osszeAllit(){
-    
+    let db = 0;
     let txt="";
     for (let index = 0; index < lista.length; index++) {
-         txt+=`<div><img src="kepek/hatter.jpg" id="${index}" alt=""></div>`;
-        
-     
+        txt+=`<div id="${db}"><img src="kepek/hatter.jpg" alt="kepem" id="${index}"> </div>`;
+            db+=1;
     }
     console.log(txt);
     return txt;
- }
+
+}
